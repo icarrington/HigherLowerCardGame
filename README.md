@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a Card Game developed in React with TypeScript where you have to guess whether the next card drawn will be higher or lower than the previous one. Both the previous and next cards are shown.
 
 ## Available Scripts
 
