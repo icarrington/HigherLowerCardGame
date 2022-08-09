@@ -1,24 +1,76 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Card from './components/Card';
 
 function App() {
+
+  const suits = ["♠", "♣", "♥", "♦"];
+  const values = [
+    "A",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "J",
+    "Q",
+    "K"
+  ];
+
+  const cards: JSX.Element[] = suits.flatMap(suit => {
+    return values.map(value => {
+      return <Card suit={suit} value={value} />
+    })
+  })
+
+  function drawCard(): JSX.Element {
+    const randomIndex = Math.floor(Math.random() * cards.length);
+    return cards[randomIndex];
+  }
+
+  const[currentCard, setCurrentCard] = useState(drawCard());
+  const[prevCard, setPrevCard] = useState(<div className='blank'></div>);
+  const[status, setStatus] = useState('Higher or Lower?')
+  const[score, setScore] = useState(0);
+
+  function handleClick(event: { target: any; }): void {
+    let target= event.target;
+    const value: string = currentCard.props.value;
+    const index: number = values.findIndex(item => item === value);
+    const newCard: JSX.Element = drawCard();
+    const newValue: string = newCard.props.value;
+    const newIndex: number = values.findIndex(item => item === newValue);
+
+    if(index > newIndex) {
+      setStatus('Lower!');
+      if (target.textContent === 'Lower') setScore(prev => prev + 1);
+    } else if(index < newIndex) {
+      setStatus('Higher!');
+      if (target.textContent === 'Higher') setScore(prev => prev + 1);
+    } else {
+      setStatus('The Same!');
+      setScore(prev => prev + 1);
+    }
+
+    setPrevCard(currentCard);
+    setCurrentCard(newCard);
+
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div className="board">
+        {prevCard}
+        {currentCard}
+        <button className='lower' onClick={handleClick}>Lower</button>
+        <button className="higher" onClick={handleClick}>Higher</button>
+        <div className="status">{status} {`Score: ${score}`}</div>
+        
+      </div>
     </div>
   );
 }
