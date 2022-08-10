@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-This is a Card Game developed in React with TypeScript where you have to guess whether the next card drawn will be higher or lower than the previous one. Both the previous and next cards are shown.
+I developed a card game in React with Typescript where you have to guess whether the next card will have a higher or lower value than the card shown. To accomplish this I mapped over arrays of suits and values to create an array of card components. The current card suit and value is stored in the app state. Then when you click higher or lower, the prevCard state is set to the current card and a new card is drawn, comparing the new value to the previous value.
 
 ## Available Scripts
 
