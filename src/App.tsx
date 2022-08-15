@@ -21,6 +21,7 @@ function App() {
     "K"
   ];
 
+  //create an array of Card components with mapping.
   const cards: JSX.Element[] = suits.flatMap(suit => {
     return values.map(value => {
       return <Card suit={suit} value={value} />
@@ -45,7 +46,8 @@ function App() {
     const newValue: string = newCard.props.value;
     const newIndex: number = values.findIndex(item => item === newValue);
 
-    if(index > newIndex) {
+    //if the current card is higher than the new card, its index in the value array will be higher.
+    if(index > newIndex) { 
       setStatus('Lower!');
       if (target.textContent === 'Lower') setScore(prev => prev + 1);
     } else if(index < newIndex) {
